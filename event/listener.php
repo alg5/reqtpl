@@ -48,32 +48,32 @@ class listener implements EventSubscriberInterface
 		);
 	}
 	//display_reqtpl
- public function user_setup($event)
-{
+	public function user_setup($event)
+	{
 		$lang_set_ext = $event['lang_set_ext'];
 		$lang_set_ext[] = array(
-				'ext_name' => 'alg/reqtpl',
-				'lang_set' => 'reqtpl',
+			'ext_name' => 'alg/reqtpl',
+			'lang_set' => 'reqtpl',
 		);
 		$event['lang_set_ext'] = $lang_set_ext;
-}
+	}
 
 	public function posting_modify_template_vars($event)
 	{
-		$this->user->add_lang_ext('alg/reqtpl', 'reqtpl');	
+		$this->user->add_lang_ext('alg/reqtpl', 'reqtpl');
 		$forum_id = $event['forum_id'];
 		$mode = $event['mode'];
 		$page_data = $event['page_data'];
-		$sql = 'SELECT * FROM ' . $this->reqtpl_templates_table . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int)$forum_id;
+		$sql = 'SELECT * FROM ' . $this->reqtpl_templates_table . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int) $forum_id;
 		$result = $this->db->sql_query($sql);
 		$tpl_data = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
-        if (!$tpl_data)
-        {
+		if (!$tpl_data)
+		{
 			return;
 		}
 		$show_only_for_new_topic = false;
-        //if ($tpl_data)
+		//if ($tpl_data)
 		{
 			if ((int) $tpl_data['tpl_show_options'] == listener::SHOW_ONLY_FOR_NEW_TOPIC)
 			{
@@ -83,43 +83,43 @@ class listener implements EventSubscriberInterface
 					$page_data['SUBJECT'] = $this->user->data['username'] . ' ' . $this->user->format_date(time() , "d/m/Y H:i");
 					$event['page_data'] = $page_data;
 				}
-				
+
 			}
 			$this->template->assign_vars(array(
-				'REQ_TPL_ID'		=> (int)$tpl_data['tpl_id'],
+				'REQ_TPL_ID'		=> (int) $tpl_data['tpl_id'],
 				'REQ_TPL_NAME'		=> utf8_htmlspecialchars($tpl_data['tpl_name']),
 				'REQ_TPL_COMMENT'	=> utf8_htmlspecialchars($tpl_data['tpl_comment']),
 				'REQ_TPL_SHOW_OPTIONS'	=> (int) ($tpl_data['tpl_show_options']),
 				'S_SHOW_BUTTON'	=> $event['mode'] == 'edit' ? false : true,
 				'S_SHOW_BUTTON_FOR_NEW_TOPIC'	=> (bool) $show_only_for_new_topic,
 				'U_FORUM_PATH'	=>  append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", "f={$forum_id}"),
-				
+
 			));
-		$sql = 'SELECT * FROM ' . $this->reqtpl_fields_table . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'] . ' ORDER BY field_order';
+		$sql = 'SELECT * FROM ' . $this->reqtpl_fields_table . ' WHERE tpl_id = ' . (int) $tpl_data['tpl_id'] . ' ORDER BY field_order';
 		$result = $this->db->sql_query($sql);
 		$display_prefix = '';   //??? todo
 		while ($field = $this->db->sql_fetchrow($result))
 		{
 			$this->template->assign_block_vars($display_prefix . 'reqtpl_fields', array(
-				'ID'			=> (int)$field['field_id'],
+				'ID'			=> (int) $field['field_id'],
 				'NAME'			=> utf8_htmlspecialchars($field['field_name']),
 				'COMMENT'		=> utf8_htmlspecialchars($field['field_comment']),
-				'TYPE'			=> (int)$field['field_type'],
-				'IMPORTANT'		=> (int)$field['field_important'],
-				'SIZE'			=> (int)$field['field_size'],
+				'TYPE'			=> (int) $field['field_type'],
+				'IMPORTANT'		=> (int) $field['field_important'],
+				'SIZE'			=> (int) $field['field_size'],
 				'MATCH'			=> str_replace(array('\\', "'"), array('\\\\', "\'"), $field['field_match']),
 				'DEFAULT'		=> utf8_htmlspecialchars($field['field_default']),
 				'PATTERN'		=> str_replace(array('\\', "'"), array('\\\\', "\'"), $field['field_pattern']),
 			));
-			switch((int)$field['field_type'])
+			switch ((int) $field['field_type'])
 			{
 				case listener::REQTPL_FIELD_TYPE_SELECT:
-					$sql = 'SELECT * FROM ' . $this->reqtpl_options_table . ' WHERE field_id = ' . (int)$field['field_id'] . ' ORDER BY option_order';
+					$sql = 'SELECT * FROM ' . $this->reqtpl_options_table . ' WHERE field_id = ' . (int) $field['field_id'] . ' ORDER BY option_order';
 					$field_options = $this->db->sql_query($sql);
 					while ($field_option = $this->db->sql_fetchrow($field_options))
 					{
 						$this->template->assign_block_vars($display_prefix . 'reqtpl_fields.field_options', array(
-							'ID'			=> (int)$field_option['option_id'],
+							'ID'			=> (int) $field_option['option_id'],
 							'TEXT'			=> utf8_htmlspecialchars($field_option['option_text']),
 							'SELECTED'		=> strtolower($field_option['option_text']) == strtolower($field['field_default']),
 						));
@@ -132,11 +132,11 @@ class listener implements EventSubscriberInterface
 		}
 		$this->db->sql_freeresult($result);
 
-    }
-   }
-    public function submit_post_end($event)
-    {
-        $mode = $event['mode'];
+		}
+	}
+	public function submit_post_end($event)
+	{
+		$mode = $event['mode'];
 		$data =  $event['data'];
 		$tpl_received = $this->request->variable('tpl_received', 0);
 			$user_id_ary = array();
@@ -147,7 +147,7 @@ class listener implements EventSubscriberInterface
 				include($this->phpbb_root_path . 'includes/functions_user.' . $this->php_ext);
 			}
 			$res = user_get_id_name($user_id_ary, $usernames);
-            $notification_data = array(
+			$notification_data = array(
 					'post_id'   => (int) $data['post_id'],
 					'topic_id'   => (int) $data['topic_id'],
 					'topic_title'   =>  $data['topic_title'],
@@ -156,7 +156,6 @@ class listener implements EventSubscriberInterface
 					'poster_name'   =>sizeof($usernames) ? $usernames[(int) $data['poster_id']] : '',
 					'members_ids'   => $this->set_receivers_ids($user_id_ary),
 				);
-
 
 	}
 
@@ -172,7 +171,7 @@ class listener implements EventSubscriberInterface
 		//$post_data = $event['post_data'];
 		//print_r($tpl_received);
 		//print_r($this->set_receivers_ids($post_data));
-		if($tpl_received)
+		if ($tpl_received)
 		{
 			$post_data = $event['post_data'];
 			$data = $event['data'];
@@ -196,7 +195,7 @@ class listener implements EventSubscriberInterface
 					'poster_name'   =>sizeof($usernames) ? $usernames[(int) $data['poster_id']] : '',
 					'members_ids'   => $this->set_receivers_ids($post_data),
 				);
-				 
+
 				$this->add_notification($notification_data);
 		}
 	}
@@ -204,10 +203,10 @@ class listener implements EventSubscriberInterface
 	{
 	//print_r('viewtopic_get_post_data');
 
-		$this->user->add_lang_ext('alg/reqtpl', 'reqtpl');	
+		$this->user->add_lang_ext('alg/reqtpl', 'reqtpl');
 		$forum_id = $event['forum_id'];
-		$sql = 'SELECT * FROM ' . $this->reqtpl_templates_table . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int)$forum_id;
-	   
+		$sql = 'SELECT * FROM ' . $this->reqtpl_templates_table . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int) $forum_id;
+
 		$result = $this->db->sql_query($sql);
 		$tpl_data = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
@@ -222,14 +221,14 @@ class listener implements EventSubscriberInterface
 				return;
 			}
 			$this->template->assign_vars(array(
-				'REQ_TPL_ID'		=> (int)$tpl_data['tpl_id'],
+				'REQ_TPL_ID'		=> (int) $tpl_data['tpl_id'],
 				'REQ_TPL_NAME'		=> utf8_htmlspecialchars($tpl_data['tpl_name']),
 				'REQ_TPL_COMMENT'	=> utf8_htmlspecialchars($tpl_data['tpl_comment']),
 				'REQ_TPL_SHOW_OPTIONS'	=> (int) ($tpl_data['tpl_show_options']),
 				'S_SHOW_BUTTON'	=> true,
 				'SUBJECT'	=> 'qwerty1',
 			));
-		$sql = 'SELECT * FROM ' . $this->reqtpl_fields_table . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'] . ' ORDER BY field_order';
+		$sql = 'SELECT * FROM ' . $this->reqtpl_fields_table . ' WHERE tpl_id = ' . (int) $tpl_data['tpl_id'] . ' ORDER BY field_order';
 		$result = $this->db->sql_query($sql);
 		$display_prefix = '';   //??? todo
 		// print_r($sql);
@@ -237,25 +236,25 @@ class listener implements EventSubscriberInterface
 		{
 			$this->template->assign_block_vars($display_prefix . 'reqtpl_fields', array(
 			//$this->template->assign_block_vars('reqtpl_fields', array(
-				'ID'			=> (int)$field['field_id'],
+				'ID'			=> (int) $field['field_id'],
 				'NAME'			=> utf8_htmlspecialchars($field['field_name']),
 				'COMMENT'		=> utf8_htmlspecialchars($field['field_comment']),
-				'TYPE'			=> (int)$field['field_type'],
-				'IMPORTANT'		=> (int)$field['field_important'],
-				'SIZE'			=> (int)$field['field_size'],
+				'TYPE'			=> (int) $field['field_type'],
+				'IMPORTANT'		=> (int) $field['field_important'],
+				'SIZE'			=> (int) $field['field_size'],
 				'MATCH'			=> str_replace(array('\\', "'"), array('\\\\', "\'"), $field['field_match']),
 				'DEFAULT'		=> utf8_htmlspecialchars($field['field_default']),
 				'PATTERN'		=> str_replace(array('\\', "'"), array('\\\\', "\'"), $field['field_pattern']),
 			));
-			switch((int)$field['field_type'])
+			switch ((int) $field['field_type'])
 			{
 				case listener::REQTPL_FIELD_TYPE_SELECT:
-					$sql = 'SELECT * FROM ' . $this->reqtpl_options_table . ' WHERE field_id = ' . (int)$field['field_id'] . ' ORDER BY option_order';
+					$sql = 'SELECT * FROM ' . $this->reqtpl_options_table . ' WHERE field_id = ' . (int) $field['field_id'] . ' ORDER BY option_order';
 					$field_options = $this->db->sql_query($sql);
 					while ($field_option = $this->db->sql_fetchrow($field_options))
 					{
 						$this->template->assign_block_vars($display_prefix . 'reqtpl_fields.field_options', array(
-							'ID'			=> (int)$field_option['option_id'],
+							'ID'			=> (int) $field_option['option_id'],
 							'TEXT'			=> utf8_htmlspecialchars($field_option['option_text']),
 							'SELECTED'		=> strtolower($field_option['option_text']) == strtolower($field['field_default']),
 						));
@@ -274,7 +273,7 @@ class listener implements EventSubscriberInterface
 	// Add notifications
 	public function add_notification($notification_data, $notification_type_name = 'alg.reqtpl.notification.type.reqtpl_manager')
 	{
-                    $this->notification_manager->add_notifications($notification_type_name, $notification_data);
+					$this->notification_manager->add_notifications($notification_type_name, $notification_data);
 	}
 
 	public function notification_exists($reqtpl_data, $notification_type_name)
@@ -298,11 +297,11 @@ class listener implements EventSubscriberInterface
 		), $item_ids, $this->user->data['user_id']);
 	}
 
-    private function set_receivers_ids($post_data)
+	private function set_receivers_ids($post_data)
 	{
 		$ids = array();
 		$result = '';
-		if(isset($post_data['forum_type_ticket']) && $post_data['forum_type_ticket'] && isset($post_data['group_id_approve_ticket']) && $post_data['group_id_approve_ticket'])
+		if (isset($post_data['forum_type_ticket']) && $post_data['forum_type_ticket'] && isset($post_data['group_id_approve_ticket']) && $post_data['group_id_approve_ticket'])
 		{
 			$sql= "SELECT user_id FROM " . USER_GROUP_TABLE . " WHERE group_id=" . $post_data['group_id_approve_ticket'];
 			$result = $this->db->sql_query($sql);
@@ -312,7 +311,7 @@ class listener implements EventSubscriberInterface
 			$sql = "SELECT user_id FROM " . USERS_TABLE . " WHERE user_type=" . USER_FOUNDER;
 			$result = $this->db->sql_query($sql);
 		}
-		
+
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$ids[] = $row['user_id'];
