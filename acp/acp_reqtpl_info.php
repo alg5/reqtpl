@@ -2,7 +2,7 @@
 /**
 *
 * @author Alg
-* @version v 1.0.0. 
+* @version v 1.0.0.
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -39,5 +39,3 @@ class acp_reqtpl_info
 	{
 	}
 }
-
-?>

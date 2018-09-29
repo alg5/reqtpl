@@ -1,11 +1,11 @@
 <?php
-/** 
+/**
 *
-* reqtpl [Russian]
+* reqtpl [English]
 *
 * @package reqtpl
 * @copyright (c) 2014 alg
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -43,7 +43,7 @@ $lang = array_merge($lang, array(
 	'ACP_REQTPL__SHOW_BUTTON_OPTIONS_1'				    => 'Only when creating a new topic',
 	'ACP_REQTPL__SHOW_BUTTON_OPTIONS_2'				    => 'For each post',
 
-    'ACP_REQTPL_CANNOT_APPLY_TO_CATEGORY'	=> 'Request template cannot be set for category',
+	'ACP_REQTPL_CANNOT_APPLY_TO_CATEGORY'	=> 'Request template cannot be set for category',
 	'ACP_REQTPL_DELETE_FORUM_TPL'			=> 'Delete request template',
 	'ACP_REQTPL_DELETED'					=> 'Request template was deleted',
 	'ACP_REQTPL_SAVE_FORUM_TPL'				=> 'Save request template',
@@ -70,16 +70,16 @@ $lang = array_merge($lang, array(
 	'REQTPL_FIELD_MATCH_EXPLAIN'			=> 'You can specify a regular expression, by which the format of the input value will be checked.Leave this field empty if format checking is not required',
 	'REQTPL_FIELD_DEFAULT'					=> 'Default value',
 	'REQTPL_FIELD_DEFAULT_EXPLAIN'			=> 'You can specify a value that will be displayed automatically in the template field when filling in',
-	
+
 	'REQTPL_FIELD_ADDED'					=> 'Field added',
 	'REQTPL_FIELD_EDITED'					=> 'Field updated',
-	
+
 	'ACP_REQTPL_FIELD_TYPE_INPUT'			=> 'String',
 	'ACP_REQTPL_FIELD_TYPE_TEXTAREA'		=> 'Textarea',
 	'ACP_REQTPL_FIELD_TYPE_CHECKBOX'		=> 'Checkbox',
 	'ACP_REQTPL_FIELD_TYPE_SELECT'			=> 'Dropdown',
 	'ACP_REQTPL_FIELD_TYPE_IMAGE'			=> 'Image',
-	
+
 	'ACP_REQTPL_MAIN_OPTIONS'				=> 'General setting',
 	'ACP_REQTPL_EDIT_FORUM'					=> 'Request template setting for the forum',
 	'ACP_REQTPL_SELECT'						=> 'Укажите форум',
@@ -90,7 +90,7 @@ $lang = array_merge($lang, array(
 	'ACP_REQTPL_COMMENT_EXPLAIN'			=> '',
 	'ACP_REQTPL_SHOW'						=> 'Display on post ',
 	'ACP_REQTPL_SHOW_EXPLAIN'				=> 'You can temporarily hide the display of the request template without deleting it',
-	
+
 	'ACP_REQTPL_FIELD_NAME'					=> 'FIeld name',
 	'ACP_REQTPL_FIELD_TYPE'					=> 'Field type',
 	'ACP_REQTPL_FIELD_IMPORTANT'			=> 'Required field',

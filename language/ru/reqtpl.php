@@ -1,11 +1,11 @@
 <?php
-/** 
+/**
 *
-* liveSearch [Russian]
+* reqtpl [Russian]
 *
-* @package liveSearch
+* @package reqtpl
 * @copyright (c) 2014 alg
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -45,7 +45,7 @@ $lang = array_merge($lang, array(
 	'REQTPL_PREVIEW'		=> 'Предосмотр анкеты',
 	'NOTIFICATION_REQTPL_MANAGER'		=> 'Пользователь %s опубликовал анкету',
 	'NOTIFICATION_TYPE_REQTPL_MANAGER'		=> 'Пользователь опубликовал анкету',
-    //email
+	//email
 	'REQTPL_SUBG'		=> 'Анкета от ',
 
-    ));
+	));

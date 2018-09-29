@@ -9,6 +9,7 @@
 */
 
 namespace alg\reqtpl\notification;
+
 /**
 * Thanks for posts notifications class
 * This class handles notifying users when they have been thanked for a post
@@ -39,7 +40,6 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	*/
 	protected $inherit_read_status = true;
 
-
 	/**
 	* Notification option data (for outputting to the user)
 	*
@@ -50,7 +50,6 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 		'lang'	=> 'NOTIFICATION_TYPE_REQTPL_MANAGER',
 		'group'	=> 'NOTIFICATION_GROUP_ADMINISTRATION',
 	);
-  
 
 	/** @var string */
 	protected $notifications_table;
@@ -101,15 +100,15 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	*
 	* @return array
 	*/
-    public function find_users_for_notification($reqtpl_data, $options = array())
-    {
-        $options = array_merge(array(
-            'ignore_users'		=> array(),
-        ), $options);
+	public function find_users_for_notification($reqtpl_data, $options = array())
+	{
+		$options = array_merge(array(
+			'ignore_users'		=> array(),
+	), $options);
 
-        $users = $reqtpl_data['members_ids'];
-        return $this->check_user_notification_options($users, $options);
-    }
+		$users = $reqtpl_data['members_ids'];
+		return $this->check_user_notification_options($users, $options);
+	}
 
 	/**
 	* Get the user's avatar
@@ -117,7 +116,6 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	public function get_avatar()
 	{
 		return $this->user_loader->get_avatar($this->get_data('poster_id'));
-        
 	}
 
 	/**
@@ -127,8 +125,8 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	*/
 	public function get_title()
 	{
-        $txt = $this->user->lang($this->language_key, $this->get_data('poster_name') );
-        return $txt;
+		$txt = $this->user->lang($this->language_key, $this->get_data('poster_name') );
+		return $txt;
     }
 	/**
 	* Users needed to query before this notification can be displayed
@@ -215,7 +213,6 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 			$username = $this->user_loader->get_username($this->get_data('poster_id'), 'username');
 		}
 
-
 		return array(
 				'REQTPL_SUBG'	=> htmlspecialchars_decode($this->user->lang['REQTPL_SUBG'. $this->get_data('username')]),
 				'USERNAME'		=> htmlspecialchars_decode($this->user->data['username']),
@@ -224,18 +221,16 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 				'U_REQTPL'	=> generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
 		);
 	}
-        
-        
-        
-        //return array(
-        //        'COMMANDGAME_SUBJECT'	=> $this->get_data('email_subject'),
-        //        'USERNAME'		=> htmlspecialchars($this->user->data['username']),
-        //        'POST_SUBJECT'	=> htmlspecialchars(censor_text($this->get_data('email_subject'))),
-        //        'POST_CONTENT'	=> htmlspecialchars($txt),
-        //        'POSTER_NAME'	=> htmlspecialchars($username),
-        //        'TEAM_NAME'	=> htmlspecialchars($this->get_data('team_forum_name')),
-        //        //'U_POST_THANKS'	=> generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
-        //);
+
+		//return array(
+		//        'COMMANDGAME_SUBJECT'	=> $this->get_data('email_subject'),
+		//        'USERNAME'		=> htmlspecialchars($this->user->data['username']),
+		//        'POST_SUBJECT'	=> htmlspecialchars(censor_text($this->get_data('email_subject'))),
+		//        'POST_CONTENT'	=> htmlspecialchars($txt),
+		//        'POSTER_NAME'	=> htmlspecialchars($username),
+		//        'TEAM_NAME'	=> htmlspecialchars($this->get_data('team_forum_name')),
+		//        //'U_POST_THANKS'	=> generate_board_url() . '/viewtopic.' . $this->php_ext . "?p={$this->item_id}#p{$this->item_id}",
+		//);
 //	}
 
 	/**
@@ -250,16 +245,6 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	public function create_insert_array($reqtpl_data, $pre_create_data = array())
 	{
 
-        //$this->set_data('team_forum_id', $reqtpl_data['team_forum_id']);
-        //$this->set_data('team_forum_name', $reqtpl_data['team_forum_name']);
-        //$this->set_data('game_forum_name', $reqtpl_data['game_forum_name']);
-        //$this->set_data('from', $reqtpl_data['from']);
-        //$this->set_data('team_start_time_new', $reqtpl_data['team_start_time_new']);
-        //$this->set_data('members_ids', $reqtpl_data['members_ids']);
-        //$this->set_data('action_id', $reqtpl_data['action_id']);
-        //$this->set_data('reference_txt', $reqtpl_data['reference_txt']);
-        //$this->set_data('action_txt', $reqtpl_data['action_txt']);
-        //$this->set_data('signature_txt', $reqtpl_data['signature_txt']);
 		$this->set_data('post_id', $reqtpl_data['post_id']);
 		$this->set_data('topic_id', $reqtpl_data['topic_id']);
 		$this->set_data('topic_title', $reqtpl_data['topic_title']);

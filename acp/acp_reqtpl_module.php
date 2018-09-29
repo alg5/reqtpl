@@ -16,44 +16,44 @@ class acp_reqtpl_module
 {
 	var $u_action;
 	var $new_config = array();
-    const FIRST_POST_ONLY = 0;
-    const EACH_POST = 1;
-    
+	const FIRST_POST_ONLY = 0;
+	const EACH_POST = 1;
+
 
 	function main($id, $mode)
 	{
 		global $db, $user, $auth, $template, $request, $table_prefix, $cache;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
-        
-        if (!defined('REQTPL_FIELDS_TABLE'))
+		
+		if (!defined('REQTPL_FIELDS_TABLE'))
 		{
 			define('REQTPL_FIELDS_TABLE', $table_prefix . 'reqtpl_fields');
 		}
-        if (!defined('REQTPL_OPTIONS_TABLE'))
+		if (!defined('REQTPL_OPTIONS_TABLE'))
 		{
 			define('REQTPL_OPTIONS_TABLE', $table_prefix . 'reqtpl_options');
 		}
-        if (!defined('REQTPL_TEMPLATES_TABLE'))
+		if (!defined('REQTPL_TEMPLATES_TABLE'))
 		{
 			define('REQTPL_TEMPLATES_TABLE', $table_prefix . 'reqtpl_templates');
 		}
-        if (!defined('REQTPL_FIELD_TYPE_INPUT'))
+		if (!defined('REQTPL_FIELD_TYPE_INPUT'))
 		{
 			define('REQTPL_FIELD_TYPE_INPUT', 1);
 		}
-        if (!defined('REQTPL_FIELD_TYPE_TEXTAREA'))
+		if (!defined('REQTPL_FIELD_TYPE_TEXTAREA'))
 		{
 			define('REQTPL_FIELD_TYPE_TEXTAREA', 2);
 		}
-        if (!defined('REQTPL_FIELD_TYPE_CHECKBOX'))
+		if (!defined('REQTPL_FIELD_TYPE_CHECKBOX'))
 		{
 			define('REQTPL_FIELD_TYPE_CHECKBOX', 3);
 		}
-        if (!defined('REQTPL_FIELD_TYPE_SELECT'))
+		if (!defined('REQTPL_FIELD_TYPE_SELECT'))
 		{
 			define('REQTPL_FIELD_TYPE_SELECT', 4);
 		}
-        if (!defined('REQTPL_FIELD_TYPE_IMAGE'))
+		if (!defined('REQTPL_FIELD_TYPE_IMAGE'))
 		{
 			define('REQTPL_FIELD_TYPE_IMAGE', 5);
 		}
@@ -73,8 +73,7 @@ class acp_reqtpl_module
 		$reqtpl_comment		= utf8_normalize_nfc(htmlspecialchars_decode($request->variable('reqtpl_comment', '', true)));
 		$reqtpl_show		= $request->variable('reqtpl_show', false);
 		$reqtpl_show_options		= $request->variable('reqtpl_show_options', 0);
-       //print_r('$reqtpl_show_options = ' . $reqtpl_show_options);
-  		if (isset($_POST['submit_create_tpl']) || isset($_POST['create_tpl']))
+		if (isset($_POST['submit_create_tpl']) || isset($_POST['create_tpl']))
 		{
 			$action = 'create_tpl';
 		}
@@ -110,8 +109,8 @@ class acp_reqtpl_module
 						{
 							trigger_error($user->lang['NO_FORUM'] . adm_back_link($this->u_action), E_USER_WARNING);
 						}
-						
-						$sql = 'SELECT forum_type, forum_name FROM ' . FORUMS_TABLE . ' WHERE forum_id = ' . (int)$forum_id;
+
+						$sql = 'SELECT forum_type, forum_name FROM ' . FORUMS_TABLE . ' WHERE forum_id = ' . (int) $forum_id;
 						$result = $db->sql_query($sql);
 						$row = $db->sql_fetchrow($result);
 						$db->sql_freeresult($result);
@@ -158,7 +157,7 @@ class acp_reqtpl_module
 									'ON'	=> 't.tpl_forum_id = f.forum_id'
 								)
 							),
-							'WHERE'		=> 'f.forum_id = ' . (int)$forum_id
+							'WHERE'		=> 'f.forum_id = ' . (int) $forum_id
 						));
 						$result = $db->sql_query($sql);
 						$row = $db->sql_fetchrow($result);
@@ -172,7 +171,7 @@ class acp_reqtpl_module
 						{
 							trigger_error($user->lang['ACP_REQTPL_CANNOT_APPLY_TO_CATEGORY'] . adm_back_link($this->u_action), E_USER_WARNING);
 						}
-						if ((int)$row['tpl_id'] === 0)
+						if ((int) $row['tpl_id'] === 0)
 						{
 							$db->sql_query('INSERT INTO ' . REQTPL_TEMPLATES_TABLE . ' ' . $db->sql_build_array('INSERT', array(
 								'tpl_forum_id'	=> (int) $forum_id,
@@ -189,7 +188,7 @@ class acp_reqtpl_module
 								'tpl_show_options'		=> (int) $reqtpl_show_options,
 								'tpl_name'		=> $reqtpl_name,
 								'tpl_comment'	=> $reqtpl_comment
-							)) . ' WHERE tpl_forum_id = ' . (int)$forum_id);
+							)) . ' WHERE tpl_forum_id = ' . (int) $forum_id);
 						}
 						
 						$cache->destroy('sql', REQTPL_TEMPLATES_TABLE);
@@ -208,7 +207,7 @@ class acp_reqtpl_module
 						}
 						
 						$_options = array();
-						if ((int)$row['field_type'] == REQTPL_FIELD_TYPE_SELECT)
+						if ((int) $row['field_type'] == REQTPL_FIELD_TYPE_SELECT)
 						{
 							$sql = 'SELECT * FROM ' . REQTPL_OPTIONS_TABLE . ' WHERE field_id = ' . (int)$field_id . ' ORDER BY option_order';
 							$field_options = $db->sql_query($sql);
@@ -274,17 +273,16 @@ class acp_reqtpl_module
 										'ON'	=> 't.tpl_id = f.tpl_id'
 									)
 								),
-								'WHERE'		=> 'f.field_id = ' . (int)$field_id
+								'WHERE'		=> 'f.field_id = ' . (int) $field_id
 							));
 							$result = $db->sql_query($sql);
 							$row = $db->sql_fetchrow($result);
 							$db->sql_freeresult($result);
-							$forum_id = (int)$row['tpl_forum_id'];
+							$forum_id = (int) $row['tpl_forum_id'];
 						}
-						
-						
+
 						$sql_ary = array(
-							'tpl_id'			=> (int)$row['tpl_id'],
+							'tpl_id'			=> (int) $row['tpl_id'],
 							'field_name'		=> htmlspecialchars_decode(utf8_normalize_nfc($request->variable('reqtpl_field_name', '', true))),
 							'field_comment'		=> htmlspecialchars_decode(utf8_normalize_nfc($request->variable('reqtpl_field_comment', '', true))),
 							'field_type'		=> $request->variable('reqtpl_field_type', 1),
@@ -293,9 +291,9 @@ class acp_reqtpl_module
 							'field_match'		=> htmlspecialchars_decode(utf8_normalize_nfc($request->variable('reqtpl_field_match', '', true))),
 							'field_default'		=> htmlspecialchars_decode(utf8_normalize_nfc($request->variable('reqtpl_field_default', '', true))),
 						);
-							
+
 						$_options = array();
-						switch ((int)$sql_ary['field_type'])
+						switch ((int) $sql_ary['field_type'])
 						{
 							case REQTPL_FIELD_TYPE_IMAGE:
 								$sql_ary += array(
@@ -312,24 +310,24 @@ class acp_reqtpl_module
 								);
 								break;
 						}
-						
+
 						$db->sql_transaction('begin');
-						
+
 						if ($action == 'create')
 						{
-							$sql = 'SELECT MAX(field_order) as max_order FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int)$row['tpl_id'];
+							$sql = 'SELECT MAX(field_order) as max_order FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int) $row['tpl_id'];
 							$result = $db->sql_query($sql);
 							$_order_info = $db->sql_fetchrow($result);
 							$db->sql_freeresult($result);
-							
+
 							$sql_ary += array(
 								'field_order'	=> (int)$_order_info['max_order'] + 1,
 							);
-							
+
 							$db->sql_query('INSERT INTO ' . REQTPL_FIELDS_TABLE . $db->sql_build_array('INSERT', $sql_ary));
 							$cache->destroy('sql', REQTPL_FIELDS_TABLE);
 							$field_id = $db->sql_nextid();
-							
+
 							if (sizeof($_options))
 							{
 								$sql_ary = array();
@@ -342,11 +340,11 @@ class acp_reqtpl_module
 										'option_text'	=> $_option,
 									);
 								}
-				
+
 								$db->sql_multi_insert(REQTPL_OPTIONS_TABLE, $sql_ary);
 								$cache->destroy('sql', REQTPL_OPTIONS_TABLE);
 							}
-						
+
 							$lang = 'REQTPL_FIELD_ADDED';
 						}
 						else
@@ -355,7 +353,7 @@ class acp_reqtpl_module
 							$cache->destroy('sql', REQTPL_FIELDS_TABLE);
 
 							$db->sql_query('DELETE FROM ' . REQTPL_OPTIONS_TABLE . ' WHERE field_id = ' . $field_id);
-							
+
 							if (sizeof($_options))
 							{
 								$sql_ary = array();
@@ -368,30 +366,30 @@ class acp_reqtpl_module
 										'option_text'	=> trim($_option),
 									);
 								}
-				
+
 								$db->sql_multi_insert(REQTPL_OPTIONS_TABLE, $sql_ary);
 								$cache->destroy('sql', REQTPL_OPTIONS_TABLE);
 							}
-							
+
 							$lang = 'REQTPL_FIELD_EDITED';
 						}
-						
+
 						$db->sql_transaction('commit');
-						
+
 						trigger_error($user->lang[$lang] . adm_back_link($this->u_action . '&amp;forum_id=' . $forum_id));
-						
+
 						break;
 					case 'delete':
 						$sql = 'SELECT * FROM ' . REQTPL_FIELDS_TABLE . " WHERE field_id = $field_id";
 						$result = $db->sql_query($sql);
 						$row = $db->sql_fetchrow($result);
 						$db->sql_freeresult($result);
-		
+
 						if (!$row)
 						{
 							trigger_error($user->lang['ACP_REQTPL_FIELD_NOT_EXISTS'] . adm_back_link($this->u_action), E_USER_WARNING);
 						}
-						
+
 						$sql = $db->sql_build_query('SELECT', array(
 							'SELECT'	=> 't.tpl_forum_id',
 							'FROM'		=> array(
@@ -403,12 +401,12 @@ class acp_reqtpl_module
 									'ON'	=> 't.tpl_id = f.tpl_id'
 								)
 							),
-							'WHERE'		=> 'f.field_id = ' . (int)$field_id
+							'WHERE'		=> 'f.field_id = ' . (int) $field_id
 						));
 						$result = $db->sql_query($sql);
 						$row = $db->sql_fetchrow($result);
 						$db->sql_freeresult($result);
-						
+
 						if (confirm_box(true))
 						{
 							$db->sql_query('DELETE FROM ' . REQTPL_FIELDS_TABLE . " WHERE field_id = $field_id");
@@ -420,39 +418,39 @@ class acp_reqtpl_module
 								'forum_id'		=> $forum_id,
 							)));
 						}
-						
-						redirect($this->u_action . '&amp;forum_id=' . (int)$row['tpl_forum_id']);
-						
+
+						redirect($this->u_action . '&amp;forum_id=' . (int) $row['tpl_forum_id']);
+
 						break;
 					case 'delete_tpl':
 						if (!$forum_id)
 						{
 							trigger_error($user->lang['NO_FORUM'] . adm_back_link($this->u_action), E_USER_WARNING);
 						}
-						
+
 						if (confirm_box(true))
 						{
 							$error = '';
-		
-							$sql = 'SELECT tpl_id FROM ' . REQTPL_TEMPLATES_TABLE . ' WHERE tpl_forum_id = ' . (int)$forum_id;
+
+							$sql = 'SELECT tpl_id FROM ' . REQTPL_TEMPLATES_TABLE . ' WHERE tpl_forum_id = ' . (int) $forum_id;
 							$result = $db->sql_query($sql);
 							$tpl_data = $db->sql_fetchrow($result);
 							$db->sql_freeresult($result);
-							
+
 							if ($tpl_data)
 							{
-								$sql = 'SELECT field_id FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'];
+								$sql = 'SELECT field_id FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int) $tpl_data['tpl_id'];
 								$db->sql_freeresult($result);
 								$result = $db->sql_fetchrow($result);
 								$fields_ids = array();
-								while($row = $db->sql_fetchrow($result))
+								while ($row = $db->sql_fetchrow($result))
 								{
-									$fields_ids[] = (int)$row['field_id'];
+									$fields_ids[] = (int) $row['field_id'];
 								}
 								$db->sql_freeresult($result);
-								
-								$db->sql_query('DELETE FROM ' . REQTPL_TEMPLATES_TABLE . ' WHERE tpl_forum_id = ' . (int)$forum_id);
-								$db->sql_query('DELETE FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id']);
+
+								$db->sql_query('DELETE FROM ' . REQTPL_TEMPLATES_TABLE . ' WHERE tpl_forum_id = ' . (int) $forum_id);
+								$db->sql_query('DELETE FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int) $tpl_data['tpl_id']);
 								if (sizeof($fields_ids))
 								{
 									$db->sql_query('DELETE FROM ' . REQTPL_OPTIONS_TABLE . ' WHERE ' . $db->sql_in_set('field_id', $fields_ids));
@@ -460,16 +458,16 @@ class acp_reqtpl_module
 							}
 							else
 							{
-								$error = 'ACP_REQTPL_NO_TPL';	
+								$error = 'ACP_REQTPL_NO_TPL';
 							}
-							
+
 							$back_link = $this->u_action . '&amp;forum_id=' . $forum_id;
-		
+
 							if ($error)
 							{
 								trigger_error($user->lang[$error] . adm_back_link($back_link), E_USER_WARNING);
 							}
-		
+
 							trigger_error($user->lang['ACP_REQTPL_DELETED'] . adm_back_link($back_link));
 						}
 						else
@@ -478,34 +476,34 @@ class acp_reqtpl_module
 								'forum_id'		=> $forum_id,
 							)));
 						}
-						
+
 						redirect($this->u_action . '&amp;forum_id=' . (int)$forum_id);
-						
+
 						break;
-                        
+
 					case 'move_up':
 					case 'move_down':
 						$sql = "SELECT field_order as current_order FROM " . REQTPL_FIELDS_TABLE . " WHERE field_id = $field_id";
 						$result = $db->sql_query($sql);
-						$current_order = (int)$db->sql_fetchfield('current_order');
+						$current_order = (int) $db->sql_fetchfield('current_order');
 						$db->sql_freeresult($result);
-		
+
 						if ($current_order == 0 && $action == 'move_up')
 						{
 							break;
 						}
-						
+
 						$switch_order_id = ($action == 'move_down') ? $current_order + 1 : $current_order - 1;
-		
+
 						$sql = "UPDATE " . REQTPL_FIELDS_TABLE . " SET field_order = $current_order WHERE field_order = $switch_order_id AND field_id <> $field_id";
 						$db->sql_query($sql);
-		
+
 						if ($db->sql_affectedrows())
 						{
 							$sql = "UPDATE " . REQTPL_FIELDS_TABLE . " SET field_order = $switch_order_id WHERE field_order = $current_order AND field_id = $field_id";
 							$db->sql_query($sql);
 						}
-						
+
 						$sql = $db->sql_build_query('SELECT', array(
 							'SELECT'	=> 't.tpl_forum_id',
 							'FROM'		=> array(
@@ -517,14 +515,14 @@ class acp_reqtpl_module
 									'ON'	=> 't.tpl_id = f.tpl_id'
 								)
 							),
-							'WHERE'		=> 'f.field_id = ' . (int)$field_id
+							'WHERE'		=> 'f.field_id = ' . (int) $field_id
 						));
 						$result = $db->sql_query($sql);
 						$row = $db->sql_fetchrow($result);
 						$db->sql_freeresult($result);
-						
+
 						redirect($this->u_action . '&amp;forum_id=' . (int)$row['tpl_forum_id']);
-						
+
 						break;
 					default:
 						$template->assign_vars(array(
@@ -532,33 +530,27 @@ class acp_reqtpl_module
 							'U_ACTION_TPL'		=> $this->u_action,
 							'S_FORUM_OPTIONS'	=> make_forum_select($forum_id, false, true, false, false)
 						));
-						
+
 						$this->display_reqtpl_info($forum_id);
-						
+
 						$hidden_fields .= build_hidden_fields(array(
 							'forum_current_id'	=> $forum_id,
 						));
 						break;
 				}
 
-				break;                        
-        }
+				break;
+		}
 
  		$template->assign_vars(array(
 			'S_HIDDEN_FIELDS'	=> $hidden_fields
 		));
-       
-        
-        
-  ///============================================================      
 
-
-
-	
+	///============================================================      
 
 	}
-    
-    	function display_reqtpl_info($forum_id)
+
+		function display_reqtpl_info($forum_id)
 	{
 		global $db, $user, $template;
 
@@ -625,5 +617,4 @@ class acp_reqtpl_module
 			));
 		}
 	}
-
 }
