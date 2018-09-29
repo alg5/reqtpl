@@ -1,0 +1,5 @@
+parameters:
+    tables.reqtpl_fields: %core.table_prefix%reqtpl_fields
+    tables.reqtpl_options: %core.table_prefix%reqtpl_options
+    tables.reqtpl_templates: %core.table_prefix%reqtpl_templates
+ 

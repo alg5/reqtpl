@@ -127,7 +127,7 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	{
 		$txt = $this->user->lang($this->language_key, $this->get_data('poster_name') );
 		return $txt;
-    }
+	}
 	/**
 	* Users needed to query before this notification can be displayed
 	*
@@ -158,7 +158,7 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	*/
 	public function get_url()
 	{
-		//return append_sid("{$this->phpbb_root_path}schedule1");  
+		//return append_sid("{$this->phpbb_root_path}schedule1");
 		return append_sid($this->phpbb_root_path . 'viewtopic.' . $this->php_ext, "p={$this->item_id}#p{$this->item_id}");
 	}
 
@@ -188,7 +188,7 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 	*/
 	public function get_reference()
 	{
-        //return  $this->get_data('signature_txt');
+		//return  $this->get_data('signature_txt');
 		return $this->user->lang(
 			'NOTIFICATION_REFERENCE',
 			censor_text($this->get_data('topic_title'))
@@ -255,7 +255,7 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 		parent::create_insert_array($reqtpl_data, $pre_create_data);
 	}
 
- 	/**
+	/**
 	* Function for preparing the data for update in an SQL query
 	* (The service handles insertion)
 	*
@@ -275,5 +275,5 @@ class reqtpl_manager extends  \phpbb\notification\type\base
 		}
 		return $this->create_insert_array($reqtpl_data);
 	}
-   
+
 }

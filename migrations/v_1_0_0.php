@@ -30,8 +30,8 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 		'add_tables' => array(
 				$this->table_prefix . 'reqtpl_fields' => array(
 					'COLUMNS'		=> array(
-						'tpl_id'		=> array('UINT',  NULL),
-						'field_id'		=>  array('UINT', NULL, 'auto_increment'),
+						'tpl_id'		=> array('UINT',  null),
+						'field_id'		=>  array('UINT', null, 'auto_increment'),
 						'field_order'		=> array('UINT', 0),
 						'field_name'		=> array('VCHAR:60', ''),
 						'field_comment'		=> array('VCHAR:500', ''),
@@ -50,8 +50,8 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 				),
 				$this->table_prefix . 'reqtpl_options' => array(
 					'COLUMNS'		=> array(
-						'field_id'		=>  array('UINT', NULL),
-						'option_id'		=>  array('UINT', NULL, 'auto_increment'),
+						'field_id'		=>  array('UINT', null),
+						'option_id'		=>  array('UINT', null, 'auto_increment'),
 						'option_order'		=> array('UINT', 0),
 						'option_text'		=> array('VCHAR:100', ''),
 					),
@@ -62,8 +62,8 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 				),
 				$this->table_prefix . 'reqtpl_templates' => array(
 					'COLUMNS'		=> array(
-						'tpl_id'		=>  array('UINT', NULL, 'auto_increment'),
-						'tpl_forum_id'		=> array('UINT', NULL),
+						'tpl_id'		=>  array('UINT', null, 'auto_increment'),
+						'tpl_forum_id'		=> array('UINT', null),
 						'tpl_show'		=>array('BOOL', 1),
 						'tpl_name'		=> array('VCHAR:60', ''),
 						'tpl_comment'		=> array('VCHAR:500', ''),
@@ -94,10 +94,10 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 			array('config.add', array('reqtpl', '1.0.0')),
 
 			// Remove old ACP modules
-			
+
 			// Add ACP modules
 			array('module.add', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_REQTPL')),
-			
+
 			array('module.add', array('acp', 'ACP_REQTPL', array(
 					'module_basename'	=> '\alg\reqtpl\acp\acp_reqtpl_module',
 					'module_langname'	=> 'ACP_REQTPL_SETTINGS',
@@ -144,7 +144,6 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 			)),
 
 			array('module.remove', array('acp', 'ACP_CAT_DOT_MODS', 'ACP_REQTPL')),
-			
 
 		);
 	}

@@ -2,7 +2,7 @@
 /**
  *
  * @package reqtpl
- * @copyright (c) 2014 alg 
+ * @copyright (c) 2014 alg
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
@@ -18,66 +18,21 @@ class listener implements EventSubscriberInterface
 {
 	const SHOW_ONLY_FOR_NEW_TOPIC = 0;
 	const SHOW_FOR_EACH_POST = 1;
+	const REQTPL_FIELD_TYPE_SELECT = 4;
 
-	public function __construct(\phpbb\config\config $config
-												, \phpbb\db\driver\driver_interface $db
-												, \phpbb\auth\auth $auth
-												, \phpbb\template\template $template
-												, \phpbb\user $user
-												, \phpbb\request\request_interface $request
-												, $phpbb_root_path
-												, $php_ext
-												, $table_prefix
-												, \phpbb\extension\manager $phpbb_extension_manager
-												, \phpbb\notification\manager $notification_manager
-												, $notifications_table
-											)
+	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\template\template $template, \phpbb\user $user, \phpbb\request\request_interface $request, $phpbb_root_path, $php_ext, \phpbb\notification\manager $notification_manager, $notifications_table, $reqtpl_fields_table, $reqtpl_options_table, $reqtpl_templates_table)
 	{
+		$this->db = $db;
 		$this->template = $template;
 		$this->user = $user;
 		$this->request = $request;
-		$this->auth = $auth;
-		$this->db = $db;
-		$this->config = $config;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
-		$this->phpbb_extension_manager = $phpbb_extension_manager;
 		$this->notification_manager = $notification_manager;
 		$this->notifications_table = $notifications_table;
-
-		if (!defined('REQTPL_FIELDS_TABLE'))
-		{
-			define('REQTPL_FIELDS_TABLE', $table_prefix . 'reqtpl_fields');
-		}
-        if (!defined('REQTPL_OPTIONS_TABLE'))
-		{
-			define('REQTPL_OPTIONS_TABLE', $table_prefix . 'reqtpl_options');
-		}
-		if (!defined('REQTPL_TEMPLATES_TABLE'))
-		{
-			define('REQTPL_TEMPLATES_TABLE', $table_prefix . 'reqtpl_templates');
-		}
-		if (!defined('REQTPL_FIELD_TYPE_INPUT'))
-		{
-			define('REQTPL_FIELD_TYPE_INPUT', 1);
-		}
-		if (!defined('REQTPL_FIELD_TYPE_TEXTAREA'))
-		{
-			define('REQTPL_FIELD_TYPE_TEXTAREA', 2);
-		}
-        if (!defined('REQTPL_FIELD_TYPE_CHECKBOX'))
-		{
-			define('REQTPL_FIELD_TYPE_CHECKBOX', 3);
-		}
-        if (!defined('REQTPL_FIELD_TYPE_SELECT'))
-		{
-			define('REQTPL_FIELD_TYPE_SELECT', 4);
-		}
-		if (!defined('REQTPL_FIELD_TYPE_IMAGE'))
-		{
-			define('REQTPL_FIELD_TYPE_IMAGE', 5);
-		}
-
+		$this->reqtpl_fields_table = $reqtpl_fields_table;
+		$this->reqtpl_options_table = $reqtpl_options_table;
+		$this->reqtpl_templates_table = $reqtpl_templates_table;
 	}
 
 	static public function getSubscribedEvents()
@@ -109,7 +64,7 @@ class listener implements EventSubscriberInterface
 		$forum_id = $event['forum_id'];
 		$mode = $event['mode'];
 		$page_data = $event['page_data'];
-		$sql = 'SELECT * FROM ' . REQTPL_TEMPLATES_TABLE . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int)$forum_id;
+		$sql = 'SELECT * FROM ' . $this->reqtpl_templates_table . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int)$forum_id;
 		$result = $this->db->sql_query($sql);
 		$tpl_data = $this->db->sql_fetchrow($result);
 		$this->db->sql_freeresult($result);
@@ -140,7 +95,7 @@ class listener implements EventSubscriberInterface
 				'U_FORUM_PATH'	=>  append_sid("{$this->phpbb_root_path}viewforum.$this->php_ext", "f={$forum_id}"),
 				
 			));
-		$sql = 'SELECT * FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'] . ' ORDER BY field_order';
+		$sql = 'SELECT * FROM ' . $this->reqtpl_fields_table . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'] . ' ORDER BY field_order';
 		$result = $this->db->sql_query($sql);
 		$display_prefix = '';   //??? todo
 		while ($field = $this->db->sql_fetchrow($result))
@@ -158,8 +113,8 @@ class listener implements EventSubscriberInterface
 			));
 			switch((int)$field['field_type'])
 			{
-				case REQTPL_FIELD_TYPE_SELECT:
-					$sql = 'SELECT * FROM ' . REQTPL_OPTIONS_TABLE . ' WHERE field_id = ' . (int)$field['field_id'] . ' ORDER BY option_order';
+				case listener::REQTPL_FIELD_TYPE_SELECT:
+					$sql = 'SELECT * FROM ' . $this->reqtpl_options_table . ' WHERE field_id = ' . (int)$field['field_id'] . ' ORDER BY option_order';
 					$field_options = $this->db->sql_query($sql);
 					while ($field_option = $this->db->sql_fetchrow($field_options))
 					{
@@ -251,7 +206,7 @@ class listener implements EventSubscriberInterface
 
 		$this->user->add_lang_ext('alg/reqtpl', 'reqtpl');	
 		$forum_id = $event['forum_id'];
-		$sql = 'SELECT * FROM ' . REQTPL_TEMPLATES_TABLE . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int)$forum_id;
+		$sql = 'SELECT * FROM ' . $this->reqtpl_templates_table . ' WHERE tpl_show = 1 AND tpl_forum_id = ' . (int)$forum_id;
 	   
 		$result = $this->db->sql_query($sql);
 		$tpl_data = $this->db->sql_fetchrow($result);
@@ -274,7 +229,7 @@ class listener implements EventSubscriberInterface
 				'S_SHOW_BUTTON'	=> true,
 				'SUBJECT'	=> 'qwerty1',
 			));
-		$sql = 'SELECT * FROM ' . REQTPL_FIELDS_TABLE . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'] . ' ORDER BY field_order';
+		$sql = 'SELECT * FROM ' . $this->reqtpl_fields_table . ' WHERE tpl_id = ' . (int)$tpl_data['tpl_id'] . ' ORDER BY field_order';
 		$result = $this->db->sql_query($sql);
 		$display_prefix = '';   //??? todo
 		// print_r($sql);
@@ -292,11 +247,10 @@ class listener implements EventSubscriberInterface
 				'DEFAULT'		=> utf8_htmlspecialchars($field['field_default']),
 				'PATTERN'		=> str_replace(array('\\', "'"), array('\\\\', "\'"), $field['field_pattern']),
 			));
-            //print_r('qwerty');
 			switch((int)$field['field_type'])
 			{
-				case REQTPL_FIELD_TYPE_SELECT:
-					$sql = 'SELECT * FROM ' . REQTPL_OPTIONS_TABLE . ' WHERE field_id = ' . (int)$field['field_id'] . ' ORDER BY option_order';
+				case listener::REQTPL_FIELD_TYPE_SELECT:
+					$sql = 'SELECT * FROM ' . $this->reqtpl_options_table . ' WHERE field_id = ' . (int)$field['field_id'] . ' ORDER BY option_order';
 					$field_options = $this->db->sql_query($sql);
 					while ($field_option = $this->db->sql_fetchrow($field_options))
 					{
@@ -320,18 +274,7 @@ class listener implements EventSubscriberInterface
 	// Add notifications
 	public function add_notification($notification_data, $notification_type_name = 'alg.reqtpl.notification.type.reqtpl_manager')
 	{
-		//if ($this->notification_exists($notification_data, $notification_type_name))
-		//{
-		//    $this->notification_manager->update_notifications($notification_type_name, $notification_data);
-		//}
-		//else
-		//{
-		//    $this->notification_manager->add_notifications($notification_type_name, $notification_data);
-		//}
-		//print_r($notification_data);
-		$this->notification_manager->add_notifications($notification_type_name, $notification_data);
-
-
+                    $this->notification_manager->add_notifications($notification_type_name, $notification_data);
 	}
 
 	public function notification_exists($reqtpl_data, $notification_type_name)
@@ -357,7 +300,6 @@ class listener implements EventSubscriberInterface
 
     private function set_receivers_ids($post_data)
 	{
-		//if($this->phpbb_extension_manager->is_enabled('alg/forumticket'))
 		$ids = array();
 		$result = '';
 		if(isset($post_data['forum_type_ticket']) && $post_data['forum_type_ticket'] && isset($post_data['group_id_approve_ticket']) && $post_data['group_id_approve_ticket'])

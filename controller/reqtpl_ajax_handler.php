@@ -9,15 +9,6 @@
 
 namespace alg\reqtpl\controller;
 
-/**
-* @ignore
-*/
-
-if (!defined('IN_PHPBB'))
-{
-	exit;
-}
-
 class reqtpl_ajax_handler
 {
 protected $thankers = array();
@@ -84,7 +75,9 @@ protected $thankers = array();
 				{
 					$row['pos'] = $pos;
 					if ($pos == 0)
+					{
 						$arr_priority1[] = $row;
+					}
 					else
 					{
 						$arr_priority2[] = $row;
@@ -127,7 +120,9 @@ protected $thankers = array();
 			{
 				$row['pos'] = $pos;
 				if ($pos == 0)
+				{
 					$arr_priority1[] = $row;
+				}
 				else
 				{
 					$arr_priority2[] = $row;
@@ -154,7 +149,7 @@ protected $thankers = array();
 	private function live_search_user($action, $q)
 	{
 		$sql = "SELECT user_id, username, user_email " .
-					" FROM " . USERS_TABLE . 
+					" FROM " . USERS_TABLE .
 					"	WHERE (user_type = " . USER_NORMAL . " OR user_type = " . USER_FOUNDER . ")" .
 					" AND username_clean " . $this->db->sql_like_expression(utf8_clean_string($q) . $this->db->get_any_char());
 					" ORDER BY username";
@@ -190,7 +185,7 @@ protected $thankers = array();
 		$this->db->sql_freeresult($result);
 
 		$sql = "SELECT forum_id " .
-				" FROM " . FORUMS_TABLE . 
+				" FROM " . FORUMS_TABLE .
 				" WHERE left_id >= " . $row['left_id'] .
 				" AND right_id <= " .  $row['right_id'] .
 				" ORDER BY  left_id" ;

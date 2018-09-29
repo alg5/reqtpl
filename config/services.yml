@@ -1,19 +1,20 @@
+imports:
+    - { resource: tables.yml }
 services:
     alg.reqtpl.listener:
         class: alg\reqtpl\event\listener
         arguments:
-            - @config
             - @dbal.conn
-            - @auth
             - @template
             - @user
             - @request
             - %core.root_path%
             - %core.php_ext%
-            - %core.table_prefix%
-            - @ext.manager
             - @notification_manager
             - %tables.notifications%
+            - %tables.reqtpl_fields%
+            - %tables.reqtpl_options%
+            - %tables.reqtpl_templates%
         tags:
             - { name: event.listener }
     alg.reqtpl.notification.type.reqtpl_manager:
