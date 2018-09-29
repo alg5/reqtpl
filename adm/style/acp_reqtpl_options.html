@@ -1,0 +1,161 @@
+<!-- INCLUDE overall_header.html -->
+
+<a name="maincontent"></a>
+
+<h1>{L_ACP_REQTPL}KVA KVA</h1>
+
+<p>{L_ACP_REQTPL_EXPLAIN}</p>
+
+<!-- IF S_EDIT_FIELD -->
+<form id="acp_reqtpl" method="post" action="{U_ACTION}">
+	<fieldset>
+		<legend>{L_ACP_REQTPL_FIELD_OPTIONS}</legend>
+		<p>{L_ACP_REQTPL_FIELD_OPTIONS_EXPLAIN}</p>
+		<dl>
+			<dt><label for="reqtpl_field_name">{L_REQTPL_FIELD_NAME}</label><br /><span>{L_REQTPL_FIELD_NAME_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_field_name" name="reqtpl_field_name" size="60" maxlength="60" value="{REQTPL_FIELD_NAME}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_field_comment">{L_REQTPL_FIELD_COMMENT}</label><br /><span>{L_REQTPL_FIELD_COMMENT_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_field_comment" name="reqtpl_field_comment" size="60" maxlength="500" value="{REQTPL_FIELD_COMMENT}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_field_type">{L_REQTPL_FIELD_TYPE}</label><br /><span>{L_REQTPL_FIELD_TYPE_EXPLAIN}</span></dt>
+			<dd>
+				<select id="reqtpl_field_type" name="reqtpl_field_type" onchange="document.getElementById('field_options_container').style.display=(this.value==4)?'block':'none'">
+					<option value="1"<!-- IF REQTPL_FIELD_TYPE eq 1 --> selected="selected"<!-- ENDIF -->>{L_ACP_REQTPL_FIELD_TYPE_INPUT}</option>
+					<option value="2"<!-- IF REQTPL_FIELD_TYPE eq 2 --> selected="selected"<!-- ENDIF -->>{L_ACP_REQTPL_FIELD_TYPE_TEXTAREA}</option>
+					<option value="3"<!-- IF REQTPL_FIELD_TYPE eq 3 --> selected="selected"<!-- ENDIF -->>{L_ACP_REQTPL_FIELD_TYPE_CHECKBOX}</option>
+					<option value="4"<!-- IF REQTPL_FIELD_TYPE eq 4 --> selected="selected"<!-- ENDIF -->>{L_ACP_REQTPL_FIELD_TYPE_SELECT}</option>
+<!--					<option value="5"<!-- IF REQTPL_FIELD_TYPE eq 5 --> selected="selected"<!-- ENDIF -->>{L_ACP_REQTPL_FIELD_TYPE_IMAGE}</option>-->
+				</select>
+			</dd>
+		</dl>
+		<dl id="field_options_container"<!-- IF REQTPL_FIELD_TYPE neq 4 --> style="display:none"<!-- ENDIF -->>
+			<dt><label for="reqtpl_field_options">{L_REQTPL_FIELD_OPTIONS}</label><br /><span>{L_REQTPL_FIELD_OPTIONS_EXPLAIN}</span></dt>
+			<dd><textarea name="reqtpl_field_options" id="reqtpl_field_options" cols="20" rows="10">{REQTPL_FIELD_OPTIONS}</textarea></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_field_important">{L_REQTPL_FIELD_IMPORTANT}</label><br /><span>{L_REQTPL_FIELD_IMPORTANT_EXPLAIN}</span></dt>
+			<dd><input type="checkbox" class="radio" name="reqtpl_field_important" id="reqtpl_field_important" value="1"<!-- IF REQTPL_FIELD_IMPORTANT --> checked="checked"<!-- ENDIF --> /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_field_size">{L_REQTPL_FIELD_SIZE}</label><br /><span>{L_REQTPL_FIELD_SIZE_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_field_size" name="reqtpl_field_size" size="4" maxlength="4" value="{REQTPL_FIELD_SIZE}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_field_match">{L_REQTPL_FIELD_MATCH}</label><br /><span>{L_REQTPL_FIELD_MATCH_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_field_match" name="reqtpl_field_match" size="60" maxlength="200" value="{REQTPL_FIELD_MATCH}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_field_default">{L_REQTPL_FIELD_DEFAULT}</label><br /><span>{L_REQTPL_FIELD_DEFAULT_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_field_default" name="reqtpl_field_default" size="60" maxlength="500" value="{REQTPL_FIELD_DEFAULT}" /></dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset class="submit-buttons">
+		<legend>{L_SUBMIT}</legend>
+		<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+		<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+		{S_HIDDEN_FIELDS}
+		{S_FORM_TOKEN}
+	</fieldset>
+
+<!-- ELSE -->
+<form id="Form1" method="post" action="{U_ACTION_TPL}">
+	<fieldset>
+		<legend>{L_ACP_REQTPL_SELECT}</legend>
+	
+		<dl>
+			<dt><label for="forum">{L_ACP_REQTPL_SELECT}:</label></dt>
+			<dd><select id="forum" name="forum_id">{S_FORUM_OPTIONS}</select></dd>
+		</dl>
+		
+		<p class="quick">
+			<input class="button2" name="submit_select_forum" type="submit" value="{L_ACP_REQTPL_SELECT_FORUM}" />
+		</p>
+		
+		{S_HIDDEN_FIELDS}
+		{S_FORM_TOKEN}
+<!-- IF TPL_ID -->
+	</fieldset>
+	<fieldset>
+		<legend>{L_ACP_REQTPL_MAIN_OPTIONS}</legend>
+		
+		<dl>
+			<dt><label for="forum">{L_ACP_REQTPL_EDIT_FORUM}:</label></dt>
+			<dd>{S_FORUM_NAME}</dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_name">{L_ACP_REQTPL_NAME}:</label><br /><span>{L_ACP_REQTPL_NAME_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_name" name="reqtpl_name" size="60" maxlength="60" value="{NAME}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_comment">{L_ACP_REQTPL_COMMENT}:</label><br /><span>{L_ACP_REQTPL_COMMENT_EXPLAIN}</span></dt>
+			<dd><input type="text" id="reqtpl_comment" name="reqtpl_comment" size="60" maxlength="500" value="{COMMENT}" /></dd>
+		</dl>
+		<dl>
+			<dt><label for="reqtpl_show">{L_ACP_REQTPL_SHOW}:</label><br /><span>{L_ACP_REQTPL_SHOW_EXPLAIN}</span></dt>
+			<dd><input type="checkbox" class="radio" name="reqtpl_show" id="reqtpl_show" <!-- IF SHOW --> checked="checked"<!-- ENDIF --> /></dd>
+		</dl>
+
+		<p class="quick"><!-- IF TPL_ID > 0 -->
+			<input class="button2" name="submit_delete_tpl" type="submit" onclick="document.getElementById('acp_reqtpl').action = document.getElementById('acp_reqtpl').action.replace(/&amp;/g, '&')+'&action=delete_tpl';return true" value="{L_ACP_REQTPL_DELETE_FORUM_TPL}" /><!-- ENDIF -->
+			<input class="button2" name="submit_save_tpl" type="submit" value="{L_ACP_REQTPL_SAVE_FORUM_TPL}" />
+		</p>
+	<!-- IF TPL_ID > 0 -->
+	</fieldset>
+</form>
+<form method="post" action="{U_ACTION}">
+	<fieldset class="tabulated">
+		<legend>{L_ACP_REQTPL_EDIT_FORUM}</legend>
+		
+		<table cellspacing="1" id="down">
+		<thead>
+		<tr>
+			<th>{L_ACP_REQTPL_FIELD_NAME}</th>
+			<th style="width:150px">{L_ACP_REQTPL_FIELD_TYPE}</th>
+			<th style="width:100px">{L_ACP_REQTPL_FIELD_IMPORTANT}</th>
+			<th style="width:80px">{L_ACTION}</th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- BEGIN fields -->
+			<!-- IF fields.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+				<td>{fields.NAME}</td>
+				<td><!-- IF fields.TYPE eq 1 -->{L_ACP_REQTPL_FIELD_TYPE_INPUT}<!-- ELSEIF fields.TYPE eq 2 -->{L_ACP_REQTPL_FIELD_TYPE_TEXTAREA}<!-- ELSEIF fields.TYPE eq 3 -->{L_ACP_REQTPL_FIELD_TYPE_CHECKBOX}<!-- ELSEIF fields.TYPE eq 4 -->{L_ACP_REQTPL_FIELD_TYPE_SELECT}<!-- ELSEIF fields.TYPE eq 5 -->{L_ACP_REQTPL_FIELD_TYPE_IMAGE}<!-- ENDIF --></td>
+				<td><!-- IF fields.S_IMPORTANT -->{L_YES}<!-- ELSE -->{L_NO}<!-- ENDIF --></td>
+				<td style="text-align:right">
+					<!-- IF fields.S_FIRST_ROW && not fields.S_LAST_ROW --><a href="{fields.U_MOVE_DOWN}">{ICON_MOVE_DOWN}</a><!-- ELSEIF not fields.S_FIRST_ROW && not fields.S_LAST_ROW--><a href="{fields.U_MOVE_UP}">{ICON_MOVE_UP}</a> <a href="{fields.U_MOVE_DOWN}">{ICON_MOVE_DOWN}</a><!-- ELSEIF fields.S_LAST_ROW && not fields.S_FIRST_ROW --><a href="{fields.U_MOVE_UP}">{ICON_MOVE_UP}</a><!-- ENDIF --> 
+					<a href="{fields.U_EDIT}">{ICON_EDIT}</a> 
+					<a href="{fields.U_DELETE}">{ICON_DELETE}</a>
+				</td>
+			</tr>
+		<!-- BEGINELSE -->
+			<tr class="row3">
+				<td colspan="4">{L_ACP_NO_ITEMS}</td>
+			</tr>
+		<!-- END fields -->
+		</tbody>
+		</table>
+		
+		<p class="quick">
+			<input class="button2" name="submit" type="submit" value="{L_ACP_REQTPL_ADD_FIELD}" />
+		</p>
+	<!-- ENDIF -->
+
+		{S_HIDDEN_FIELDS}
+		{S_FORM_TOKEN}
+<!-- ELSEIF S_FORUM_ID -->
+	</fieldset>
+	<fieldset>
+		<legend>{L_ACP_REQTPL_EDIT_FORUM}</legend>
+		<p class="quick">
+			<input class="button2" name="submit_create_tpl" type="submit" value="{L_ACP_REQTPL_CREATE_FORUM_TPL}" />
+		</p>
+<!-- ENDIF -->
+	</fieldset>
+<!-- ENDIF -->
+</form>
+
+<!-- INCLUDE overall_footer.html -->

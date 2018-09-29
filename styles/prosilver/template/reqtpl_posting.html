@@ -1,0 +1,110 @@
+<!-- IF REQ_TPL_ID -->
+    <!-- INCLUDEJS request_template.js -->
+<!--    <!-- INCLUDEJS request_template-milk.js -->-->
+    <input type='button' id='reqtpl_btn' name='reqtpl_btn' class='reqtpl'  value='{L_REQTPL_BTN}'  <!-- IF S_SHOW_BUTTON_FOR_NEW_TOPIC -->style='display:none;'<!-- ENDIF --> />
+    <input type="hidden" id="tpl_received"name="tpl_received" value="0" />
+	<script type="text/javascript">
+	// <![CDATA[
+		var lang = ['{L_REQTPL_BTN}', '{L_REQTPL_IMPORTANT}', '{L_REQTPL_CLOSE}', '{L_REQTPL_INCORRECT}', '{L_YES}', '{L_NO}', '{L_DELETE}', '{L_REQTPL_COMMENT}'];
+		var reqtpl_title = "{REQ_TPL_NAME}";
+		var fields = [], regexps = [], important = [], patterns = [];
+		//onload_functions.push('reqtpl.initialize();');
+		var head = document.getElementsByTagName("head")[0], _c = document.createElement('link');
+        _c.type='text/css';
+        _c.rel='stylesheet';
+      //  _c.href='./reqtpl.css';_c.media='all';head.appendChild(_c);
+//    console.log(head);
+//	alert(head);
+
+    <!-- BEGIN reqtpl_fields -->
+	<!-- IF reqtpl_fields.TYPE eq 1 -->
+		fields.push('reqtpl_input{reqtpl_fields.ID}');
+		patterns['reqtpl_input{reqtpl_fields.ID}'] = '{reqtpl_fields.PATTERN}';
+		important['reqtpl_input{reqtpl_fields.ID}'] = <!-- IF reqtpl_fields.IMPORTANT -->true<!-- ELSE -->false<!-- ENDIF -->;
+		<!-- IF reqtpl_fields.MATCH -->regexps['reqtpl_input{reqtpl_fields.ID}'] = '{reqtpl_fields.MATCH}';<!-- ENDIF -->
+	<!-- ELSEIF reqtpl_fields.TYPE eq 2 -->
+		fields.push('reqtpl_textarea{reqtpl_fields.ID}');
+		patterns['reqtpl_textarea{reqtpl_fields.ID}'] = '{reqtpl_fields.PATTERN}';
+		important['reqtpl_textarea{reqtpl_fields.ID}'] = <!-- IF reqtpl_fields.IMPORTANT -->true<!-- ELSE -->false<!-- ENDIF -->;
+	<!-- ELSEIF reqtpl_fields.TYPE eq 3 -->
+		fields.push('reqtpl_checkbox{reqtpl_fields.ID}');
+		patterns['reqtpl_checkbox{reqtpl_fields.ID}'] = '{reqtpl_fields.PATTERN}';
+		important['reqtpl_checkbox{reqtpl_fields.ID}'] = <!-- IF reqtpl_fields.IMPORTANT -->true<!-- ELSE -->false<!-- ENDIF -->;
+	<!-- ELSEIF reqtpl_fields.TYPE eq 4 -->
+		fields.push('reqtpl_select{reqtpl_fields.ID}');
+		patterns['reqtpl_select{reqtpl_fields.ID}'] = '{reqtpl_fields.PATTERN}';
+		important['reqtpl_select{reqtpl_fields.ID}'] = <!-- IF reqtpl_fields.IMPORTANT -->true<!-- ELSE -->false<!-- ENDIF -->;
+	<!-- ELSEIF reqtpl_fields.TYPE eq 5 -->
+		<!-- DEFINE $IMAGE_FIELDS = 1 -->
+		fields.push('reqtpl_image{reqtpl_fields.ID}');
+		patterns['reqtpl_image{reqtpl_fields.ID}'] = '{reqtpl_fields.PATTERN}';
+		important['reqtpl_image{reqtpl_fields.ID}'] = <!-- IF reqtpl_fields.IMPORTANT -->true<!-- ELSE -->false<!-- ENDIF -->;
+	<!-- ENDIF -->
+	<!-- END reqtpl_fields -->
+	<!-- IF $IMAGE_FIELDS -->
+		function _addImageField(first, container)
+		{
+			var _rnd = Math.floor(Math.random()*100000);
+			var _default = document.getElementById(first).defaultValue;
+			$('<div id="div_' + _rnd + '" class="img_field img_field1"><input type="text" value="' + _default + '" size="40" /><br />' + lang[7] + ':<br /><textarea cols="40"></textarea><br /><a href="#" onclick="$(\'#div_' + _rnd + '\').remove();return false;">' + lang[6] + '</a>').appendTo('#' + container);
+		}
+	<!-- ENDIF -->
+		/* EasyBB.net */
+	// ]]>
+	</script>
+
+
+
+	<div id="reqtpl_main" style="display:none;border:1px solid green;'">
+		<div class="reqtpl_body panel" style='border:1px solid red;'>
+			<div id = 'header' style = 'border:0px solid blue;'><h3>{REQ_TPL_NAME}</h3>
+            <!-- IF REQ_TPL_COMMENT --><p>
+				{REQ_TPL_COMMENT}
+			</p><!-- ENDIF -->
+            </div>
+            <div id="reqtpl_center" class="inner" style=" border:1px solid blue;"><span class="corners-top"><span></span></span>
+			
+			<fieldset>
+			<!-- BEGIN reqtpl_fields -->
+				<dl>
+					<dt><strong>{reqtpl_fields.NAME}</strong><!-- IF reqtpl_fields.IMPORTANT --> <span class="important">*</span><!-- ENDIF --><!-- IF reqtpl_fields.COMMENT --><br /><span>{reqtpl_fields.COMMENT}</span><!-- ENDIF --></dt>
+					<dd>
+					<!-- IF reqtpl_fields.TYPE eq 1 -->
+						<input type="text" id="reqtpl_input{reqtpl_fields.ID}" name="reqtpl_input{reqtpl_fields.ID}" value="{reqtpl_fields.DEFAULT}"<!-- IF reqtpl_fields.SIZE --> maxlength="{reqtpl_fields.SIZE}" size="{reqtpl_fields.SIZE}"<!-- ELSE --> size="40"<!-- ENDIF --> /><span class="error"></span>
+					<!-- ELSEIF reqtpl_fields.TYPE eq 2 -->
+						<textarea id="reqtpl_textarea{reqtpl_fields.ID}" name="reqtpl_textarea{reqtpl_fields.ID}">{reqtpl_fields.DEFAULT}</textarea><span class="error"></span>
+					<!-- ELSEIF reqtpl_fields.TYPE eq 3 -->
+						<input type="checkbox" id="reqtpl_checkbox{reqtpl_fields.ID}" name="reqtpl_checkbox{reqtpl_fields.ID}"<!-- IF reqtpl_fields.DEFAULT --> checked="checked"<!-- ENDIF --> /><span class="error"></span>
+					<!-- ELSEIF reqtpl_fields.TYPE eq 4 -->
+						<select id="reqtpl_select{reqtpl_fields.ID}" name="reqtpl_select{reqtpl_fields.ID}">
+							<!-- BEGIN field_options -->
+							<option value="reqtpl_option{reqtpl_fields.field_options.ID}"<!-- IF reqtpl_fields.field_options.SELECTED --> selected="selected"<!-- ENDIF -->>{reqtpl_fields.field_options.TEXT}</option><!-- END field_options -->
+						</select>
+					<!-- ELSEIF reqtpl_fields.TYPE eq 5 -->
+						<div id="reqtpl_image{reqtpl_fields.ID}_container">
+							<div class="img_field">
+								<input type="text" id="reqtpl_image{reqtpl_fields.ID}" name="reqtpl_image{reqtpl_fields.ID}" value="{reqtpl_fields.DEFAULT}" size="40" /><span class="error"></span>
+								<br />{L_REQTPL_COMMENT}:<br />
+								<textarea id="reqtpl_image{reqtpl_fields.ID}_comment" name="reqtpl_image{reqtpl_fields.ID}_comment"></textarea>
+							</div>
+						</div>
+						<p><a href="#" onclick="_addImageField('reqtpl_image{reqtpl_fields.ID}', 'reqtpl_image{reqtpl_fields.ID}_container');reqtpl.resize();return false;">{L_REQTPL_ADD_FIELD}</a></p>
+					<!-- ENDIF -->
+					</dd>
+				</dl>
+			<!-- END reqtpl_fields -->
+			</fieldset>
+			<span class="corners-bottom"><span></span></span></div>
+            <div class=" bg2 no-margin">
+			    <div class="inner"><span class="corners-top"><span></span></span>
+				    <fieldset class="submit-buttons">
+					    <input type="button" class="button2" id="reqtpl_btn_cancel" value="{L_CANCEL}" />
+					    <input type="button" class="button1" id="reqtpl_btn_submit" value="{L_REQTPL_PREVIEW}" />
+				    </fieldset>
+			    <span class="corners-bottom"><span></span></span></div>
+		    </div>
+		</div>
+		
+	</div>
+    <div id='reqtpl_block' style="display:none"></div>
+<!-- ENDIF -->

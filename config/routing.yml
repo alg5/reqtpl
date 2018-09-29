@@ -1,0 +1,6 @@
+
+reqtpl_controller:
+    path: /reqtpl/{action}/{forum}/{user}
+    defaults: { _controller: alg.reqtpl.reqtpl_ajax_handler:main }
+    requirements:
+        forum: \d+

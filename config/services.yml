@@ -1,0 +1,27 @@
+services:
+    alg.reqtpl.listener:
+        class: alg\reqtpl\event\listener
+        arguments:
+            - @config
+            - @dbal.conn
+            - @auth
+            - @template
+            - @user
+            - @request
+            - %core.root_path%
+            - %core.php_ext%
+            - %core.table_prefix%
+            - @ext.manager
+            - @notification_manager
+            - %tables.notifications%
+        tags:
+            - { name: event.listener }
+    alg.reqtpl.notification.type.reqtpl_manager:
+        class: alg\reqtpl\notification\reqtpl_manager
+        shared: false
+        parent: notification.type.base
+        calls:
+            - [set_user_loader, ['@user_loader']]
+            - [set_notifications_table, ['%tables.notifications%']]
+        tags:
+            - { name: notification.type }

@@ -1,0 +1,61 @@
+#reqtpl_block {
+	 background: #000;
+  height: 100%;
+  opacity: 0.6;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+  top: 0;
+  left: 0;
+}
+
+#reqtpl_main 
+{
+    width:600px;
+    text-align:left;
+    -webkit-border-radius:7px;
+    -moz-border-radius:7px;
+    border-radius:7px;
+    border:2px solid white;
+    /*-moz-box-shadow:0 0 20px 0 #000;-webkit-box-shadow:0 0 20px 0 #000;box-shadow:0 0 20px 0 #000;*/
+    background:white;
+    position:fixed;
+    /*padding : 3px 0 3px 0;*/
+    bottom:50px;
+    /*top:100px;*/
+    margin: 0 auto;
+    z-index:11;
+    display: block;
+    }
+#reqtpl_main .reqtpl_bodyy {overflow:auto;}
+#reqtpl_main h3 {margin-top:0}
+#reqtpl_main dl .important {color:red;font-weight:bold}
+.no-margin {margin:0}
+#reqtpl_main .img_field {padding:2px 0}
+#reqtpl_main .img_field1 {border-top:1px solid #999}
+/*#reqtpl_btn {cursor: pointer;height:25px;width:140px;display:inline-block;/*reset abbc3 shitstyle */border:none;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0}
+#reqtpl_btn:hover {background-position:bottom;outline:none}
+#reqtpl_btn::-moz-focus-inner {border:none !important};
+*/
+.reqtpl_body.panel {
+    height: 550px;
+}
+.reqtpl_bodyy input {
+    height: 20px;
+    width: 100%;
+	cursor: text;
+}
+
+.reqtpl_bodyy.panel {
+    max-height: 550px;
+}
+@media screen and (max-width: 980px) 
+{
+        /*#reqtpl_main 
+        {
+	        width:90%;
+        }
+    .reqtpl_body.panel {
+        height: 80%;
+    }*/
+}
