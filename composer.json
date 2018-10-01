@@ -2,15 +2,15 @@
     "name": "alg/reqtpl",
     "type": "phpbb-extension",
     "description": "bla-bla",
-    "homepage": "http://www.phpbbguru.net",
+    "homepage": "https://github.com/alg5/reqtpl",
     "version": "1.0.2",
-    "time": "2014-09-29",
-    "createtime": "2018-07-10",
-    "license": "GPL-2.0",
+    "time": "2018-10-01",
+    "createtime": "2014-09-29",
+    "license": "GPL-2.0-only",
     "authors": [
         {
             "name": "Алг",
-            "homepage": "http://www.chugunok.net",
+            "homepage": "https://github.com/alg5/reqtpl",
             "role": "Developer"
         }
        
