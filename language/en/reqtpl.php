@@ -35,10 +35,16 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'REQTPL_BTN'			=> 'Шаблон запроса',
-	'REQTPL_IMPORTANT'		=> 'Обязательно для заполнения',
-	'REQTPL_CLOSE'			=> 'Закрыть',
-	'REQTPL_INCORRECT'		=> 'Неверный формат',
-	'REQTPL_ADD_FIELD'		=> 'Добавить поле',
-	'REQTPL_COMMENT'		=> 'Комментарий',
+	'REQTPL_BTN'			=> 'Request template',
+	'REQTPL_BTN'			=> 'Fill request template',
+	'REQTPL_IMPORTANT'		=> 'Required',
+	'REQTPL_CLOSE'			=> 'Close',
+	'REQTPL_INCORRECT'		=> 'Format is incorrect',
+	'REQTPL_ADD_FIELD'		=> 'Add field',
+	'REQTPL_COMMENT'		=> 'Comment',
+	'REQTPL_PREVIEW'		=> 'Preview',
+	'NOTIFICATION_REQTPL_MANAGER'		=> 'User %s created new request',
+	'NOTIFICATION_TYPE_REQTPL_MANAGER'		=> 'New request',
+	//email
+	'REQTPL_SUBG'		=> 'Request from ',
 ));
