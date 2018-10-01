@@ -83,13 +83,13 @@ class v_1_0_0 extends \phpbb\db\migration\migration
 
 	public function revert_schema()
 	{
-                    return array(
-                            'drop_tables'	=> array(
-                                    $this->table_prefix . 'reqtpl_fields',
-                                    $this->table_prefix . 'reqtpl_options',
-                                    $this->table_prefix . 'reqtpl_templates'
-                            ),
-                    );
+		return array(
+				'drop_tables'	=> array(
+						$this->table_prefix . 'reqtpl_fields',
+						$this->table_prefix . 'reqtpl_options',
+						$this->table_prefix . 'reqtpl_templates'
+				),
+		);
 	}
 
 	public function update_data()
