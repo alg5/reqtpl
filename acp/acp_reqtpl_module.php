@@ -522,7 +522,7 @@ class acp_reqtpl_module
 	function display_reqtpl_info($forum_id)
 	{
 		global $db, $user, $template, $phpbb_container;
- 		$reqtpl_fields_table = $phpbb_container->getParameter('tables.reqtpl_fields');
+		$reqtpl_fields_table = $phpbb_container->getParameter('tables.reqtpl_fields');
 		$reqtpl_templates_table = $phpbb_container->getParameter('tables.reqtpl_templates');
 
 		if ($forum_id)
